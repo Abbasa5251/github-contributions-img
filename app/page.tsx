@@ -26,6 +26,7 @@ import {
 	CheckCircle,
 } from "lucide-react";
 import { toast } from "sonner";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
 	const [repoUrl, setRepoUrl] = useState("");
@@ -128,6 +129,11 @@ export default function Home() {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
 			<div className="container mx-auto px-4 py-8">
+				{/* Theme Toggle */}
+				<div className="flex justify-end mb-4">
+					<ThemeToggle />
+				</div>
+
 				<div className="max-w-4xl mx-auto space-y-8">
 					{/* Header */}
 					<div className="text-center space-y-4">
