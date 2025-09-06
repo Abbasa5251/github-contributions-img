@@ -246,7 +246,7 @@ function generateSVGImage(
 		headerHeight,
 	} = dimensions;
 
-	let svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`;
+	let svg = `<svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="max-width: 100%; height: auto; display: block;">`;
 
 	// Gradient background
 	svg += `<defs>

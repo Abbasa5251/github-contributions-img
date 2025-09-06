@@ -330,12 +330,14 @@ export default function Home() {
 									</CardDescription>
 								</CardHeader>
 								<CardContent className="space-y-4">
-									<div className="p-4 border rounded-lg bg-muted/20">
-										<img
-											src={generatedImages.png}
-											alt="Contributors PNG"
-											className="max-w-full h-auto rounded-lg border bg-white shadow-sm"
-										/>
+									<div className="p-4 border rounded-lg bg-muted/20 overflow-hidden">
+										<div className="w-full overflow-hidden rounded-lg border bg-white shadow-sm">
+											<img
+												src={generatedImages.png}
+												alt="Contributors PNG"
+												className="w-full h-auto max-w-full object-contain"
+											/>
+										</div>
 									</div>
 									<Button
 										onClick={() =>
@@ -363,13 +365,15 @@ export default function Home() {
 									</CardDescription>
 								</CardHeader>
 								<CardContent className="space-y-4">
-									<div className="p-4 border rounded-lg bg-muted/20">
-										<div
-											className="max-w-full h-auto rounded-lg border bg-white p-4 shadow-sm"
-											dangerouslySetInnerHTML={{
-												__html: generatedImages.svg,
-											}}
-										/>
+									<div className="p-4 border rounded-lg bg-muted/20 overflow-hidden">
+										<div className="w-full overflow-hidden rounded-lg border bg-white shadow-sm">
+											<div
+												className="svg-container"
+												dangerouslySetInnerHTML={{
+													__html: generatedImages.svg,
+												}}
+											/>
+										</div>
 									</div>
 									<Button
 										onClick={() =>
