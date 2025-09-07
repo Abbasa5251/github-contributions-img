@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
 	} catch (error: unknown) {
 		console.error("Error processing request:", error);
 
-		if (error && typeof error === 'object' && 'response' in error) {
+		if (error && typeof error === "object" && "response" in error) {
 			const axiosError = error as { response?: { status?: number } };
 			if (axiosError.response?.status === 404) {
 				return NextResponse.json({
@@ -101,7 +101,9 @@ export async function POST(request: NextRequest) {
 				});
 			}
 		} else if (
-			error && typeof error === 'object' && 'code' in error &&
+			error &&
+			typeof error === "object" &&
+			"code" in error &&
 			(error.code === "ECONNABORTED" || error.code === "ETIMEDOUT")
 		) {
 			return NextResponse.json({
@@ -319,10 +321,7 @@ function generateEmbedCode(
 	repo: string,
 	repoUrl: string
 ): string {
-	const deployUrl =
-		process.env.VERCEL_URL ||
-		process.env.NEXT_PUBLIC_VERCEL_URL ||
-		"localhost:3000";
+	const deployUrl = process.env.NEXT_PUBLIC_VERCEL_URL || "localhost:3000";
 	const protocol = deployUrl.includes("localhost") ? "http" : "https";
 	const baseUrl = `${protocol}://${deployUrl}`;
 
