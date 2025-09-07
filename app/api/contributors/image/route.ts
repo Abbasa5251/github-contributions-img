@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import { createCanvas, loadImage } from "canvas";
+import { createCanvas, loadImage, CanvasRenderingContext2D } from "canvas";
 import { generateImageDimensions, getContributorPosition } from "@/lib/utils";
 
 interface Contributor {
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
 				`${owner}/${repo}`
 			);
 
-			return new NextResponse(pngBuffer as any, {
+			return new NextResponse(pngBuffer as unknown as BodyInit, {
 				headers: {
 					"Content-Type": "image/png",
 					"Cache-Control": "public, max-age=3600",
@@ -71,15 +71,18 @@ export async function GET(request: NextRequest) {
 				},
 			});
 		}
-	} catch (error: any) {
+	} catch (error: unknown) {
 		console.error("Error generating image:", error);
 
-		if (error.response?.status === 404) {
-			return new NextResponse("Repository not found", { status: 404 });
-		} else if (error.response?.status === 403) {
-			return new NextResponse("GitHub API rate limit exceeded", {
-				status: 429,
-			});
+		if (error && typeof error === 'object' && 'response' in error) {
+			const axiosError = error as { response?: { status?: number } };
+			if (axiosError.response?.status === 404) {
+				return new NextResponse("Repository not found", { status: 404 });
+			} else if (axiosError.response?.status === 403) {
+				return new NextResponse("GitHub API rate limit exceeded", {
+					status: 429,
+				});
+			}
 		}
 
 		return new NextResponse("Failed to generate image", { status: 500 });
@@ -175,7 +178,7 @@ async function generatePNGImageBuffer(
 }
 
 function drawPlaceholderAvatar(
-	ctx: any,
+	ctx: CanvasRenderingContext2D,
 	x: number,
 	y: number,
 	size: number,

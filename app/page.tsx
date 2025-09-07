@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -28,10 +29,17 @@ import {
 import { toast } from "sonner";
 import { ThemeToggle } from "@/components/theme-toggle";
 
+interface Contributor {
+	login: string;
+	avatar_url: string;
+	contributions: number;
+	html_url: string;
+}
+
 export default function Home() {
 	const [repoUrl, setRepoUrl] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [contributors, setContributors] = useState([]);
+	const [contributors, setContributors] = useState<Contributor[]>([]);
 	const [generatedImages, setGeneratedImages] = useState<{
 		png: string;
 		svg: string;
@@ -81,7 +89,7 @@ export default function Home() {
 			} else {
 				setError(data.error || "Failed to generate contributors image");
 			}
-		} catch (error) {
+		} catch {
 			setError(
 				"Network error. Please check your connection and try again."
 			);
@@ -277,7 +285,7 @@ export default function Home() {
 							<CardContent>
 								<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
 									{contributors.map(
-										(contributor: any, index) => (
+										(contributor: Contributor, index) => (
 											<div
 												key={index}
 												className="flex flex-col items-center space-y-2 p-2 rounded-lg hover:bg-muted/50 transition-colors"
@@ -332,9 +340,11 @@ export default function Home() {
 								<CardContent className="space-y-4">
 									<div className="p-4 border rounded-lg bg-muted/20 overflow-hidden">
 										<div className="w-full overflow-hidden rounded-lg border bg-white shadow-sm">
-											<img
+											<Image
 												src={generatedImages.png}
 												alt="Contributors PNG"
+												width={800}
+												height={400}
 												className="w-full h-auto max-w-full object-contain"
 											/>
 										</div>

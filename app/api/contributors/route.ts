@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import { createCanvas, loadImage } from "canvas";
+import { createCanvas, loadImage, CanvasRenderingContext2D } from "canvas";
 import {
 	parseGitHubUrl,
 	generateImageDimensions,
@@ -84,22 +84,25 @@ export async function POST(request: NextRequest) {
 			},
 			embedCode,
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		console.error("Error processing request:", error);
 
-		if (error.response?.status === 404) {
-			return NextResponse.json({
-				success: false,
-				error: "Repository not found or is private",
-			});
-		} else if (error.response?.status === 403) {
-			return NextResponse.json({
-				success: false,
-				error: "GitHub API rate limit exceeded. Please try again later.",
-			});
+		if (error && typeof error === 'object' && 'response' in error) {
+			const axiosError = error as { response?: { status?: number } };
+			if (axiosError.response?.status === 404) {
+				return NextResponse.json({
+					success: false,
+					error: "Repository not found or is private",
+				});
+			} else if (axiosError.response?.status === 403) {
+				return NextResponse.json({
+					success: false,
+					error: "GitHub API rate limit exceeded. Please try again later.",
+				});
+			}
 		} else if (
-			error.code === "ECONNABORTED" ||
-			error.code === "ETIMEDOUT"
+			error && typeof error === 'object' && 'code' in error &&
+			(error.code === "ECONNABORTED" || error.code === "ETIMEDOUT")
 		) {
 			return NextResponse.json({
 				success: false,
@@ -203,7 +206,7 @@ async function generatePNGImage(
 }
 
 function drawPlaceholderAvatar(
-	ctx: any,
+	ctx: CanvasRenderingContext2D,
 	x: number,
 	y: number,
 	size: number,
