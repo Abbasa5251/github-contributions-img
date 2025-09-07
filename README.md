@@ -15,7 +15,7 @@ A beautiful web application that generates contributor images for GitHub reposit
 
 ### Web Interface
 
-1. Visit the application at [your-domain.com](your-domain.com)
+1. Visit the application at [github-contributions-img.vercel.app](https://github-contributions-img.vercel.app/)
 2. Enter your GitHub repository URL (e.g., `https://github.com/owner/repository`)
 3. Click "Generate Contributors Image"
 4. Download the generated images or copy the embed code
@@ -27,13 +27,13 @@ You can also use the API directly to embed images in your README:
 #### PNG Format
 
 ```markdown
-![Contributors](https://your-domain.com/api/contributors/image?owner=OWNER&repo=REPO)
+![Contributors](https://github-contributions-img.vercel.app/api/contributors/image?owner=OWNER&repo=REPO)
 ```
 
 #### SVG Format
 
 ```markdown
-![Contributors](https://your-domain.com/api/contributors/image?owner=OWNER&repo=REPO&format=svg)
+![Contributors](https://github-contributions-img.vercel.app/api/contributors/image?owner=OWNER&repo=REPO&format=svg)
 ```
 
 #### HTML Format
@@ -41,7 +41,7 @@ You can also use the API directly to embed images in your README:
 ```html
 <a href="https://github.com/OWNER/REPO/graphs/contributors">
 	<img
-		src="https://your-domain.com/api/contributors/image?owner=OWNER&repo=REPO"
+		src="https://github-contributions-img.vercel.app/api/contributors/image?owner=OWNER&repo=REPO"
 		alt="Contributors"
 	/>
 </a>
@@ -99,8 +99,8 @@ Get contributor image directly.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/contributions-img.git
-cd contributions-img
+git clone https://github.com/Abbasa5251/github-contributions-img.git
+cd github-contributions-img
 ```
 
 2. Install dependencies:
@@ -128,14 +128,9 @@ For production deployment, you may want to add:
 
 ## Deployment
 
-### Vercel (Recommended)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/contributions-img)
-
-### Other Platforms
-
 The app can be deployed to any platform that supports Next.js:
 
+-   Vercel (recommended)
 -   Netlify
 -   Railway
 -   AWS Amplify
